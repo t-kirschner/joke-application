@@ -13,6 +13,6 @@ public class GreetingController {
     public ResponseEntity<String> processData(@RequestBody String data) {
         System.out.println(data);
 
-        return ResponseEntity.ok("Data processed successfully!");
+        return ResponseEntity.ok("We can talk!");
     }
 }
