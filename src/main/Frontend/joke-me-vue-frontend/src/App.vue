@@ -10,7 +10,7 @@ export default {
 
 <template>
   <div>
-    <h1>Meine App</h1>
+    <h1>Joke-Me!</h1>
     <user-input></user-input>
   </div>
 </template>
