@@ -1,7 +1,6 @@
 package com.sqs.jokeme;
 
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,10 +10,9 @@ public class Controller {
     Api api = new Api();
 
     @PostMapping("/")
-    public ResponseEntity<String> processData(@RequestBody String data) {
-        String joke = api.getApiResponse(data);
-        System.out.println(joke);
+    public String processData(@RequestBody String data) {
 
-        return ResponseEntity.ok("We can talk!");
+
+        return api.getApiResponse(data);
     }
 }

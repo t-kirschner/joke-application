@@ -14,3 +14,11 @@ export default {
     <user-input></user-input>
   </div>
 </template>
+
+<style>
+h1 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+</style>
