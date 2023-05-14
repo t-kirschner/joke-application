@@ -48,7 +48,7 @@ export default {
     </div>
 
     <div class="form-group">
-      <button @click="handleClick" class="btn btn-primary">Submit</button>
+      <button @click="handleClick" class="btn">Submit</button>
     </div>
 
     <div class="form-group">
