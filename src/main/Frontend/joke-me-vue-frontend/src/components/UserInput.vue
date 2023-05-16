@@ -33,9 +33,7 @@ export default {
     <div class="form-group">
       <label for="dropdown1" class="form-label">Joke type:</label>
       <select id="dropdown1" v-model="inputField1" class="form-control">
-        <option value="any">Any</option>
         <option value="programming">Programming</option>
-        <option value="christmas">Christmas</option>
       </select>
     </div>
 
