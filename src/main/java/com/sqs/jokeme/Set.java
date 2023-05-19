@@ -3,9 +3,9 @@ package com.sqs.jokeme;
 public enum Set {
     ANY("Any"), PROGRAMMING("Programming"), CHRISTMAS("Christmas"), ENGLISH(""), GERMAN("lang=de&");
 
-    public final String option;
+    public final String url;
 
     Set(String option) {
-        this.option = option;
+        this.url = option;
     }
 }

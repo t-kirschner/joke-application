@@ -2,47 +2,30 @@ package com.sqs.jokeme;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
 @CrossOrigin(origins = "http://localhost:5173/")
+@Component
 public class Controller {
-    Api api = new Api();
 
     @Autowired
-    private JokeRepository repository;
+    private Buffer buffer;
 
     @PostMapping("/")
-    public String insertData(@RequestBody String data) {
-        Joke joke = new Joke();
+    public String getData(@RequestBody String userInput) {
 
-        try {
-            if(data.contains("german")) {
-                joke.setLanguage("german");
-                joke.setJoke(api.getApiResponse(Set.GERMAN));
 
-            } else {
-                joke.setLanguage("english");
-                joke.setJoke(api.getApiResponse(Set.ENGLISH));
-            }
-
-            repository.save(joke);
-
-        } catch (Exception e) {
-            return "Excuse me, your jokes are too heavy for my database...";
+        if (buffer.getCountByLanguage(Set.GERMAN.toString()) < 5) {
+            buffer.loadJokes(Set.GERMAN);
+        } else if (buffer.getCountByLanguage(Set.ENGLISH.toString()) < 5) {
+            buffer.loadJokes(Set.ENGLISH);
         }
 
-        return "Added joke to database";
+        return "Jokes loaded";
     }
-
-    /*
-    Api api = new Api();
-
-    @PostMapping("/")
-    public String processData(@RequestBody String data) {
-        return api.getApiResponse(data);
-    }
-
-     */
 }
+//SELECT * FROM JOKES;
+//DELETE FROM JOKES WHERE LANGUAGE = 'GERMAN';
