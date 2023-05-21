@@ -17,14 +17,13 @@ public class Controller {
     @PostMapping("/")
     public String getData(@RequestBody String userInput) {
 
-
         if (buffer.getCountByLanguage(Set.GERMAN.toString()) < 5) {
             buffer.loadJokes(Set.GERMAN);
         } else if (buffer.getCountByLanguage(Set.ENGLISH.toString()) < 5) {
             buffer.loadJokes(Set.ENGLISH);
         }
 
-        return "Jokes loaded";
+        return buffer.getJoke(userInput);
     }
 }
 //SELECT * FROM JOKES;

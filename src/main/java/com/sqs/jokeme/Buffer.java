@@ -3,6 +3,7 @@ package com.sqs.jokeme;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class Buffer {
@@ -34,12 +35,22 @@ public class Buffer {
         }
     }
 
-    /*
-    public String getJoke(String userInput) {
 
+    @GetMapping("/")
+    public String getJoke(String userInput) {
+        String language;
+        if (userInput.contains("english")) {
+            language = "ENGLISH";
+        } else {
+            language = "GERMAN";
+        }
+
+        Joke joke = repository.findFirstByLanguage(language);
+        repository.delete(joke);
+
+        return joke.getJoke();
     }
 
-     */
 
 
     public long getCountByLanguage(String language) {
