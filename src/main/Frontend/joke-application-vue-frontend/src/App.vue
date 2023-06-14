@@ -1,9 +1,9 @@
 <script>
-import UserInput from './components/UserInterface.vue'
+import UserInterface from './UserInterface.vue'
 
 export default {
   components: {
-    UserInput
+    UserInterface
   }
 }
 </script>
@@ -11,7 +11,7 @@ export default {
 <template>
   <div>
     <h1>Joke Application</h1>
-    <user-input></user-input>
+    <user-interface></user-interface>
   </div>
 </template>
 

@@ -4,18 +4,13 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      inputField1: '',
-      inputField2: '',
+      inputField: '',
       apiResult: ''
     }
   },
   methods: {
     handleClick() {
-        const inputData = {
-            inputField1: this.inputField1,
-            inputField2: this.inputField2
-        }
-      axios.post('http://localhost:8080/', inputData)
+      axios.post('http://localhost:8080/', this.inputField)
         .then(response => {
             this.apiResult = response.data;
         })
@@ -38,8 +33,8 @@ export default {
     </div>
 
     <div class="form-group">
-      <label for="dropdown2" class="form-label">Language:</label>
-      <select id="dropdown2" v-model="inputField2" class="form-control">
+      <label for="dropdown" class="form-label">Language:</label>
+      <select id="dropdown" v-model="inputField" class="form-control">
         <option value="english">English</option>
         <option value="german">German</option>
       </select>
