@@ -1,13 +1,12 @@
-package com.sqs.jokeme;
+package com.sqs.jokeapplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Service;
 
 @SpringBootApplication
-public class JokeMeApplication {
+public class JokeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JokeMeApplication.class, args);
+		SpringApplication.run(JokeApplication.class, args);
 	}
 }

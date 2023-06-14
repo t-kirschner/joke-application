@@ -1,4 +1,4 @@
-package com.sqs.jokeme;
+package com.sqs.jokeapplication;
 
 public enum Set {
     ANY("Any"), PROGRAMMING("Programming"), CHRISTMAS("Christmas"), ENGLISH(""), GERMAN("lang=de&");

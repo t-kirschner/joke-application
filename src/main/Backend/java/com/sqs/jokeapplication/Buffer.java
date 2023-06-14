@@ -1,4 +1,4 @@
-package com.sqs.jokeme;
+package com.sqs.jokeapplication;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.sqs.jokeme;
+package com.sqs.jokeapplication;
 import jakarta.annotation.Nullable;
 import org.springframework.web.client.RestTemplate;
 

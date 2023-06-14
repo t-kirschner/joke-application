@@ -1,4 +1,4 @@
-package com.sqs.jokeme;
+package com.sqs.jokeapplication;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
