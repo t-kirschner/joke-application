@@ -6,27 +6,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
-public class Buffer {
+public class JokeDatabase {
 
     @Autowired
     private JokeRepository repository;
-    Api api = new Api();
+    JokeApi api = new JokeApi();
 
     @PostConstruct
     public void initJokes() {
         for (int i = 0; i < 10; i++) {
             Joke jokeGerman = new Joke();
             Joke jokeEnglish = new Joke();
-            jokeGerman.setLanguage(Set.GERMAN.toString());
-            jokeGerman.setJoke(api.getApiResponse(Set.GERMAN));
-            jokeEnglish.setLanguage(Set.ENGLISH.toString());
-            jokeEnglish.setJoke(api.getApiResponse(Set.ENGLISH));
+            jokeGerman.setLanguage(Language.GERMAN.toString());
+            jokeGerman.setJoke(api.getApiResponse(Language.GERMAN));
+            jokeEnglish.setLanguage(Language.ENGLISH.toString());
+            jokeEnglish.setJoke(api.getApiResponse(Language.ENGLISH));
             repository.save(jokeGerman);
             repository.save(jokeEnglish);
         }
     }
 
-    public void loadJokes(Set language) {
+    public void loadJokes(Language language) {
         for (int i = 0; i < 10; i++) {
             Joke joke = new Joke();
             joke.setLanguage(language.toString());
