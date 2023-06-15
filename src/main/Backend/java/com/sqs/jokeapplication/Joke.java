@@ -2,9 +2,11 @@ package com.sqs.jokeapplication;
 
 import jakarta.persistence.*;
 
+// saves all necessary data for a joke entity which is saved in the database
 @Entity
 @Table(name = "jokes")
 public class Joke {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,33 +21,12 @@ public class Joke {
     public Joke() {
     }
 
-    public Joke(String joke, String language) {
+    public Joke(String joke, Language language) {
         this.joke = joke;
-        this.language = language;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.language = language.toString();
     }
 
     public String getJoke() {
         return joke;
-    }
-
-    public void setJoke(String joke) {
-        this.joke = joke;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 }

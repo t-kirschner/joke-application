@@ -4,13 +4,14 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      inputField: '',
+      inputLanguage: '',
       apiResult: ''
     }
   },
   methods: {
+    // action triggered when clicking "Submit" button. Sends selected option in dropdown menu.
     handleClick() {
-      axios.post('http://localhost:8080/', this.inputField)
+      axios.post('http://localhost:8080/', this.inputLanguage)
         .then(response => {
             this.apiResult = response.data;
         })
@@ -27,16 +28,16 @@ export default {
   <div>
     <div class="form-group">
       <div>
-        <label for="type" class="form-label">Joke Type:</label>
-        <span id="type">Programming</span>
+        <label for="joke-type" class="form-label">Joke Type:</label>
+        <span id="joke-type">Programming</span>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="dropdown" class="form-label">Language:</label>
-      <select id="dropdown" v-model="inputField" class="form-control">
-        <option value="english">English</option>
-        <option value="german">German</option>
+      <label for="language-dropdown" class="form-label">Language:</label>
+      <select id="language-dropdown" v-model="inputLanguage" class="form-control">
+        <option value="1">English</option>
+        <option value="2">German</option>
       </select>
     </div>
 
@@ -46,8 +47,8 @@ export default {
 
     <div class="form-group">
       <div>
-        <label for="result" class="result-label">Result:</label>
-        <span id="result" class="result-value">{{ apiResult }}</span>
+        <label for="joke-result" class="result-label">Result:</label>
+        <span id="joke-result" class="result-value">{{ apiResult }}</span>
       </div>
     </div>
   </div>

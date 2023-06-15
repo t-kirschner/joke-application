@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+
+// connection to database. Saves and fetches jokes to and from h2 database.
 @Service
 public class JokeDatabase {
 
@@ -12,49 +15,50 @@ public class JokeDatabase {
     private JokeRepository repository;
     JokeApi api = new JokeApi();
 
+    // triggered when application starts. Initially loads 20 jokes in database.
     @PostConstruct
-    public void initJokes() {
-        for (int i = 0; i < 10; i++) {
-            Joke jokeGerman = new Joke();
-            Joke jokeEnglish = new Joke();
-            jokeGerman.setLanguage(Language.GERMAN.toString());
-            jokeGerman.setJoke(api.getApiResponse(Language.GERMAN));
-            jokeEnglish.setLanguage(Language.ENGLISH.toString());
-            jokeEnglish.setJoke(api.getApiResponse(Language.ENGLISH));
-            repository.save(jokeGerman);
-            repository.save(jokeEnglish);
-        }
+    private void initJokes() {
+        loadJokesFromApi(Language.ENGLISH);
+        loadJokesFromApi(Language.GERMAN);
     }
 
-    public void loadJokes(Language language) {
+    // loads 10 jokes with specific language from joke api in database when needed
+    public boolean loadJokesFromApi(Language language) {
+        ArrayList<Joke> jokeArrayList = new ArrayList<>();
+        String response;
+
         for (int i = 0; i < 10; i++) {
-            Joke joke = new Joke();
-            joke.setLanguage(language.toString());
-            joke.setJoke(api.getApiResponse(language));
-            repository.save(joke);
+            response = api.getApiResponse(language);
+            if (response == null) {
+                return false;
+            } else {
+                jokeArrayList.add(new Joke(response, language));
+            }
         }
+        repository.saveAll(jokeArrayList);
+        return true;
     }
 
-
+    // fetches a requested joke from database
     @GetMapping("/")
-    public String getJoke(String userInput) {
-        String language;
-        if (userInput.contains("english")) {
-            language = "ENGLISH";
+    public String getJokeFromDatabase(String userInput) {
+        Language language;
+        if (userInput.contains("1")) {
+            language = Language.ENGLISH;
         } else {
-            language = "GERMAN";
+            language = Language.GERMAN;
         }
 
-        Joke joke = repository.findFirstByLanguage(language);
+        Joke joke = repository.findFirstByLanguage(language.toString());
+        // hier abfangen, falls Kacke zurückkommt!
         repository.delete(joke);
 
         return joke.getJoke();
     }
 
-
-
-    public long getCountByLanguage(String language) {
-        return repository.countByLanguage(language);
+    // counts how many jokes from specific language remain in database
+    public long getCountByLanguage(Language language) {
+        return repository.countByLanguage(language.toString());
     }
 }
 

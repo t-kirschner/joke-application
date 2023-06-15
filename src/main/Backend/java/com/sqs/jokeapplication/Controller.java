@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+// controls interactions between frontend, api and database
 @RestController
 @RequestMapping("/")
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -14,17 +15,17 @@ public class Controller {
     @Autowired
     private JokeDatabase database;
 
+    // triggered when getting post request from frontend
     @PostMapping("/")
-    public String getData(@RequestBody String userInput) {
-
-        if (database.getCountByLanguage(Language.GERMAN.toString()) < 5) {
-            database.loadJokes(Language.GERMAN);
-        } else if (database.getCountByLanguage(Language.ENGLISH.toString()) < 5) {
-            database.loadJokes(Language.ENGLISH);
+    private String getData(@RequestBody String userInput) {
+        if (database.getCountByLanguage(Language.GERMAN) < 5 && !database.loadJokesFromApi(Language.GERMAN)) {
+            return "Jokes currently not available :/\nPlease check your internet connection and try again later.";
+        }
+        if (database.getCountByLanguage(Language.ENGLISH) < 5 && !database.loadJokesFromApi(Language.ENGLISH)) {
+            return "Jokes currently not available :/\nPlease check your internet connection and try again later.";
         }
 
-        return database.getJoke(userInput);
+        return database.getJokeFromDatabase(userInput);
     }
+
 }
-//SELECT * FROM JOKES;
-//DELETE FROM JOKES WHERE LANGUAGE = 'GERMAN';
