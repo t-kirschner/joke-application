@@ -38,7 +38,9 @@ public class JokeDatabase {
 
         try {
             repository.saveAll(jokeArrayList);
+            System.out.println("reloaded jokes");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
 
@@ -63,6 +65,7 @@ public class JokeDatabase {
         try {
             repository.delete(joke);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
 

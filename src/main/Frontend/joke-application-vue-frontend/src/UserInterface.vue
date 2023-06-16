@@ -9,14 +9,16 @@ export default {
     }
   },
   methods: {
-    // action triggered when clicking "Submit" button. Sends selected option in dropdown menu.
+    // action triggered when clicking "Submit" button. Sends selected option in dropdown menu to backend.
+    // in bigger applications this method would be outsourced for multible usage. But for this small application this is not necessary.
     handleClick() {
       axios.post('http://localhost:8080/', this.inputLanguage)
         .then(response => {
-            this.apiResult = response.data;
+          this.apiResult = response.data;
         })
         .catch(error => {
-          this.apiResult = "No connection to service. Please restart application and try again."  
+          this.apiResult = error.response.data;
+          //this.apiResult = "No connection to service. Please restart application and try again."
           console.error(error)
         })
     }
@@ -90,9 +92,9 @@ export default {
   text-align: center;
   vertical-align: middle;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   background-color: #007bff;
   border: 1px solid #007bff;
   padding: 0.375rem 0.75rem;
@@ -103,13 +105,13 @@ export default {
 }
 
 .result-label {
-font-weight: bold;
+  font-weight: bold;
 }
 
 .result-value {
-display: block;
-margin-top: 0.5rem;
-font-style: italic;
+  display: block;
+  margin-top: 0.5rem;
+  font-style: italic;
 }
 </style>
 

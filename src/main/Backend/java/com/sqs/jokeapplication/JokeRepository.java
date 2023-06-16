@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JokeRepository extends JpaRepository<Joke, Long> {
     long countByLanguage(String language);
+
     Joke findFirstByLanguage(String language);
 }
