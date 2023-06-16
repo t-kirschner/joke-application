@@ -35,7 +35,13 @@ public class JokeDatabase {
                 jokeArrayList.add(new Joke(response, language));
             }
         }
-        repository.saveAll(jokeArrayList);
+
+        try {
+            repository.saveAll(jokeArrayList);
+        } catch (Exception e) {
+            return false;
+        }
+
         return true;
     }
 
@@ -50,8 +56,15 @@ public class JokeDatabase {
         }
 
         Joke joke = repository.findFirstByLanguage(language.toString());
-        // hier abfangen, falls Kacke zurückkommt!
-        repository.delete(joke);
+        if (joke == null) {
+            return null;
+        }
+
+        try {
+            repository.delete(joke);
+        } catch (Exception e) {
+            return null;
+        }
 
         return joke.getJoke();
     }

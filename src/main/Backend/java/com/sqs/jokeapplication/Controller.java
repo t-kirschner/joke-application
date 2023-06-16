@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 // controls interactions between frontend, api and database
 @RestController
 @RequestMapping("/")
@@ -25,7 +27,6 @@ public class Controller {
             return "Jokes currently not available :/\nPlease check your internet connection and try again later.";
         }
 
-        return database.getJokeFromDatabase(userInput);
+        return Objects.requireNonNullElse(database.getJokeFromDatabase(userInput), "Connection to database failed. Please restart service and try again.");
     }
-
 }

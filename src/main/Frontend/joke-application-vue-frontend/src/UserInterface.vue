@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      inputLanguage: '',
+      inputLanguage: '1',
       apiResult: ''
     }
   },
@@ -16,7 +16,8 @@ export default {
             this.apiResult = response.data;
         })
         .catch(error => {
-            console.error(error)
+          this.apiResult = "No connection to service. Please restart application and try again."  
+          console.error(error)
         })
     }
   }
