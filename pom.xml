@@ -57,8 +57,8 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/Backend/java</sourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <sourceDirectory>src/main/Backend/java/com/sqs/jokeapplication</sourceDirectory>
+        <testSourceDirectory>src/test/java/com/sqs/jokeapplication</testSourceDirectory>
 
         <plugins>
             <plugin>
