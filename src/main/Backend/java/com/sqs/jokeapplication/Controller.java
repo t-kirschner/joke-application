@@ -19,7 +19,7 @@ public class Controller {
 
     // triggered when getting post request from frontend
     @PostMapping("/")
-    private ResponseEntity<String> getData(@RequestBody String userInput) {
+    public ResponseEntity<String> getData(@RequestBody String userInput) {
         if (database.getCountByLanguage(Language.GERMAN) < 5 && !database.loadJokesFromApi(Language.GERMAN)) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Sorry, jokes currently not available :/\nPlease check your internet connection and try again later.");
         }
@@ -29,9 +29,13 @@ public class Controller {
 
         String joke = database.getJokeFromDatabase(userInput);
         if (joke == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database doesn't respond as expected. Please restart service and try again.");
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Database doesn't respond as expected. Please restart service and try again.");
         } else {
             return ResponseEntity.ok(joke);
         }
+    }
+
+    public void setDatabase(JokeDatabase database) {
+        this.database = database;
     }
 }

@@ -76,6 +76,14 @@ public class JokeDatabase {
     public long getCountByLanguage(Language language) {
         return repository.countByLanguage(language.toString());
     }
+
+    public void setRepository(JokeRepository repository) {
+        this.repository = repository;
+    }
+
+    public void setApi(JokeApi api) {
+        this.api = api;
+    }
 }
 
 

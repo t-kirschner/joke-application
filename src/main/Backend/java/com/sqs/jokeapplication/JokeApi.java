@@ -3,9 +3,10 @@ package com.sqs.jokeapplication;
 import jakarta.annotation.Nullable;
 import org.springframework.web.client.RestTemplate;
 
+
 // connection to a third party joke api
 public class JokeApi {
-    private final RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
 
     // returns answer from api request
     @Nullable
@@ -18,5 +19,9 @@ public class JokeApi {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 }
