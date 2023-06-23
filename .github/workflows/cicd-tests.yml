@@ -15,5 +15,12 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Build application, run unittest and integration tests
-      run: mvn -B package --file pom.xml
+    - name: Build and start application
+      run: mvn spring-boot:run --file pom.xml &
+
+    - name: Wait for application to start
+      run: sleep 30s
+
+    - name: Run unittests and integrationtests
+      run: mvn test
+
