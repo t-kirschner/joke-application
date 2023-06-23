@@ -35,6 +35,11 @@ public class Controller {
         }
     }
 
+    @GetMapping
+    public String getOnlineStatus() {
+        return "Joke Application online!";
+    }
+
     public void setDatabase(JokeDatabase database) {
         this.database = database;
     }

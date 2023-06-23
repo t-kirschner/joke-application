@@ -23,7 +23,7 @@ public class LocalApiIntegrationTest {
 
     @Test
     public void testLocalApiEndpoint() {
-        String url = "http://localhost:" + port + "/";
+        String url = "http://localhost:" + port;
 
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
