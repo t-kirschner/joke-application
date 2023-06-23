@@ -1,7 +1,5 @@
 package com.sqs.jokeapplication;
 
-import com.sqs.jokeapplication.JokeApi;
-import com.sqs.jokeapplication.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

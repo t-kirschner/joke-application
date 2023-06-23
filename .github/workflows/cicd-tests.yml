@@ -15,8 +15,5 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Build with Maven
+    - name: Build application, run unittest and integration tests
       run: mvn -B package --file pom.xml
-
-    - name: Run Maven Tests
-      run: mvn test

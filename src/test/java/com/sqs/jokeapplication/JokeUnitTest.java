@@ -1,10 +1,8 @@
 package com.sqs.jokeapplication;
 
-import com.sqs.jokeapplication.Joke;
-import com.sqs.jokeapplication.Language;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JokeUnitTest {
     Joke joke = new Joke("Test joke", Language.ENGLISH);
