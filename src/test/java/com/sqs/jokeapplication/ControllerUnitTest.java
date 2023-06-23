@@ -12,7 +12,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 
-public class ControllerTest {
+public class ControllerUnitTest {
     @Mock
     private JokeDatabase jokeDatabaseMock;
 

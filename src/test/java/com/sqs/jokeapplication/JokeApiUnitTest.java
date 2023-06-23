@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class JokeApiTest {
+public class JokeApiUnitTest {
     @Mock
     private RestTemplate restTemplateMock;
 
