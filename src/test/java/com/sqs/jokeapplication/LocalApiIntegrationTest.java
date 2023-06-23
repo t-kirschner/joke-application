@@ -11,15 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class LocalApiIntegrationTest {
 
-    @LocalServerPort
-    private int port;
+    //@LocalServerPort
+    //private int port;
 
     private TestRestTemplate restTemplate = new TestRestTemplate();
 
 
     @Test
     public void testLocalApiEndpoint() {
-        String url = "http://localhost:" + port + "/";
+        String url = "http://localhost:8080/";
 
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
