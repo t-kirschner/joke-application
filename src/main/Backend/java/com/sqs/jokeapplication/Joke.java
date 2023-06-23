@@ -29,4 +29,8 @@ public class Joke {
     public String getJoke() {
         return joke;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

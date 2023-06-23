@@ -48,7 +48,6 @@ public class JokeDatabase {
     }
 
     // fetches a requested joke from database
-    @GetMapping("/")
     public String getJokeFromDatabase(String userInput) {
         Language language;
         if (userInput.contains("1")) {
