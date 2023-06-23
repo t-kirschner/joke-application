@@ -1,5 +1,7 @@
-package com.sqs.jokeapplication;
+package Unittests;
 
+import com.sqs.jokeapplication.Joke;
+import com.sqs.jokeapplication.Language;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

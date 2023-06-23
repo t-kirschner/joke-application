@@ -1,5 +1,8 @@
-package com.sqs.jokeapplication;
+package Unittests;
 
+import com.sqs.jokeapplication.Controller;
+import com.sqs.jokeapplication.JokeDatabase;
+import com.sqs.jokeapplication.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
