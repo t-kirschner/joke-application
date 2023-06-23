@@ -1,5 +1,8 @@
 package com.sqs.jokeapplication;
 
+import com.sqs.jokeapplication.Controller;
+import com.sqs.jokeapplication.JokeDatabase;
+import com.sqs.jokeapplication.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,7 +15,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 
-public class ControllerTest {
+public class ControllerUnitTest {
     @Mock
     private JokeDatabase jokeDatabaseMock;
 

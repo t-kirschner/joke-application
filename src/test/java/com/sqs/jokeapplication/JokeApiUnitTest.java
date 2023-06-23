@@ -1,5 +1,7 @@
 package com.sqs.jokeapplication;
 
+import com.sqs.jokeapplication.JokeApi;
+import com.sqs.jokeapplication.Language;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -9,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class JokeApiTest {
+public class JokeApiUnitTest {
     @Mock
     private RestTemplate restTemplateMock;
 
