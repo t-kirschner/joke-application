@@ -1,4 +1,4 @@
-name: Java Unit Test
+name: Build and Test Pipeline
 
 on: [push, pull_request]
 
