@@ -1,4 +1,4 @@
-package Unittests;
+package com.sqs.jokeapplication;
 
 import com.sqs.jokeapplication.Joke;
 import com.sqs.jokeapplication.Language;
