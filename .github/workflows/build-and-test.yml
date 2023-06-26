@@ -53,5 +53,5 @@ jobs:
           sudo apt-get update
           sudo apt-get install k6
 
-        - name: Run Load Test
-          run: k6 run ./src/test/performance/LoadTest.js
+      - name: Run Load Test
+        run: k6 run ./src/test/performance/LoadTest.js
