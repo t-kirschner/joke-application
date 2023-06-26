@@ -54,7 +54,7 @@ jobs:
         run: mvn org.owasp:dependency-check-maven:check
 
       - name: Convert OWASP Dependency Check report
-        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.dependencyCheck.reportPath=/home/runner/work/joke-application/joke-application/target/dependency-check-report.html -Dsonar.branch.name=master
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.branch.name=master -Dsonar.dependencyCheck.reportPath=/home/runner/work/joke-application/joke-application/target/dependency-check-report.html
 
   sonar-analysis:
     runs-on: ubuntu-latest
