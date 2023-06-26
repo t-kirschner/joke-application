@@ -60,3 +60,10 @@ jobs:
 
       - name: Run OWASP Dependency Check
         run: mvn org.owasp:dependency-check-maven:check
+
+      - name: Upload Dependency-Check report
+        uses: actions/upload-artifact@v2
+        with:
+          name: dependency-check-report
+          path: /home/runner/work/joke-application/joke-application/target/dependency-check-report.html
+
