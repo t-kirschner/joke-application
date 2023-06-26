@@ -3,7 +3,7 @@ name: Build and Test Pipeline
 on: [ push, pull_request ]
 
 jobs:
-  build application:
+  build-application:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
         run: sleep 30s
 
 
-  unittests and integrationtests:
+  unittests-and-integrationtests:
     runs-on: ubuntu-latest
 
     steps:
