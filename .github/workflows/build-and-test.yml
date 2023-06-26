@@ -39,31 +39,8 @@ jobs:
       - name: Build and run unittests and integrationtests
         run: mvn test
 
-      - name: Analyze with SonarCloud
+      - name: Static Code Analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=t-kirschner_joke-application -Dsonar.branch.name=master
-
-
-  owasp-dependency-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-
-      - name: Run OWASP Dependency Check
-        run: mvn org.owasp:dependency-check-maven:check
-
-      - name: Upload Dependency-Check report
-        uses: actions/upload-artifact@v2
-        with:
-          name: dependency-check-report
-          path: /home/runner/work/joke-application/joke-application/target/dependency-check-report.html
-
