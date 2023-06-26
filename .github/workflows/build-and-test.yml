@@ -45,6 +45,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=t-kirschner_joke-application -Dsonar.branch.name=master
 
+      - name: Start Application
+        run: mvn spring-boot:run --file pom.xml &
+
+      - name: Wait for application to start
+        run: sleep 20s
+
       - name: Install k6
         run: |
           sudo gpg -k
