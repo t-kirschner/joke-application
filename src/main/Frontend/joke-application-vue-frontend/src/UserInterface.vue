@@ -1,6 +1,14 @@
 <script>
 import axios from 'axios'
 
+export function checkInput(input) {
+      if (input != 1 && input != 2) {
+        return false
+      } else {
+        return true
+      }
+    }
+
 export default {
   data() {
     return {
@@ -10,17 +18,27 @@ export default {
   },
   methods: {
     // action triggered when clicking "Submit" button. Sends selected option in dropdown menu to backend.
-    // in bigger applications this method would be outsourced for multible usage. But for this small application this is not necessary.
+    // in bigger applications this method would be outsourced for multible usage and better mvc separation. But for this small application this is not necessary.
     handleClick() {
+      if (!checkInput(this.inputLanguage)) {
+        this.apiResult = 'Input not excepted. Choose between English and German.'
+      }
       axios.post('http://localhost:8080/', this.inputLanguage)
         .then(response => {
           this.apiResult = response.data;
         })
         .catch(error => {
           this.apiResult = error.response.data;
-          //this.apiResult = "No connection to service. Please restart application and try again."
           console.error(error)
         })
+    },
+
+    checkInput(input) {
+      if (input != 1 && input != 2) {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }
