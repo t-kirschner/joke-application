@@ -67,3 +67,4 @@ jobs:
           cd ./src/main/Frontend/joke-application-vue-frontend/src
           npm install
           npm run test
+
