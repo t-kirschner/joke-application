@@ -40,10 +40,10 @@ jobs:
         run: mvn test
 
       - name: Run Unit Tests (Frontend)
-          run: |
-            cd ./src/main/Frontend/joke-application-vue-frontend/src
-            npm install
-            npm run test
+        run: |
+          cd ./src/main/Frontend/joke-application-vue-frontend/src
+          npm install
+          npm run test
 
       - name: Static Code Analysis
         env:
