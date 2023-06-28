@@ -77,6 +77,10 @@ jobs:
       - name: Run k6 Load Test
         run: k6 run ./src/test/performance/LoadTest.js
 
+    # Stress Test optional because of high testing time
+    # - name: Run k6 Stress Test
+    #   run: k6 run ./src/test/performance/StressTest.js
+
       - name: Run Cypress End-to-End Test
         run: |
           cd ./src/main/Frontend/joke-application-vue-frontend
