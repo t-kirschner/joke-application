@@ -6,10 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // connection to database. Saves and fetches jokes to and from h2 database.
 @Service
 public class JokeDatabase {
+    private static final Logger logger = LoggingManager.getLogger();
 
     @Autowired
     private JokeRepository repository;
@@ -40,7 +43,7 @@ public class JokeDatabase {
             repository.saveAll(jokeArrayList);
             System.out.println("reloaded jokes");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.WARNING, "Joke Database Error", e);
             return false;
         }
 
@@ -64,7 +67,7 @@ public class JokeDatabase {
         try {
             repository.delete(joke);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.WARNING, "Joke Database Error", e);
             return null;
         }
 
