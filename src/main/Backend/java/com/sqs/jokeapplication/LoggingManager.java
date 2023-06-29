@@ -6,17 +6,15 @@ import java.util.logging.*;
 // Logging occurring errors to logfile.log
 public class LoggingManager {
     private static final Logger logger = Logger.getLogger("Joke Application");
-    private static final FileHandler fileHandler;
 
     static {
         try {
-            fileHandler = new FileHandler(System.getProperty("user.dir") + "\\logfile.log", true);
+            FileHandler fileHandler = new FileHandler(System.getProperty("user.dir") + "\\logfile.log", true);
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             fileHandler.setFormatter(formatter);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new ExceptionInInitializerError(e);
+            System.out.println(e.getMessage());
         }
     }
 
