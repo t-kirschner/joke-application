@@ -10,7 +10,7 @@ public class LoggingManager {
 
     static {
         try {
-            fileHandler = new FileHandler("C:/Users/vonto/IdeaProjects/joke-application/src/main/Backend/logfile.log", true);
+            fileHandler = new FileHandler(System.getProperty("user.dir") + "\\logfile.log", true);
             logger.addHandler(fileHandler);
             SimpleFormatter formatter = new SimpleFormatter();
             fileHandler.setFormatter(formatter);
