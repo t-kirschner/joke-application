@@ -1,13 +1,11 @@
 package com.sqs.jokeapplication;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,6 +21,7 @@ public class LocalApiIntegrationTest {
 
     @Test
     public void testLocalApiEndpoint() {
+        // checking if local REST controller is reachable
         String url = "http://localhost:" + port;
 
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);

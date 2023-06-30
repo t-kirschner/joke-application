@@ -12,9 +12,10 @@ public class JokeApiIntegrationTest {
     private TestRestTemplate restTemplate = new TestRestTemplate();
 
 
-    // returns answer from api request
     @Test
     public void testGetApiResponse() {
+        // check answer from api request
+
         String urlEnglish = "https://v2.jokeapi.dev/joke/Programming?format=txt";
         String urlGerman = "https://v2.jokeapi.dev/joke/Programming?lang=de&format=txt";
 

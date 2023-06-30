@@ -1,7 +1,5 @@
 package com.sqs.jokeapplication;
 
-import com.sqs.jokeapplication.Joke;
-import com.sqs.jokeapplication.JokeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -9,9 +7,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -53,6 +50,7 @@ public class JokeDatabaseIntegrationTest {
 
     @Test
     public void testCountByLanguage() {
+        // testing if amount of saved jokes is correct
         ArrayList<Joke> jokeList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Joke jokeGerman = new Joke("Test Witz", Language.GERMAN);
@@ -68,6 +66,7 @@ public class JokeDatabaseIntegrationTest {
 
     @Test
     public void testFindFirstByLanguage() {
+        // testing if method returns first joke with set language
         Joke jokeGerman1 = new Joke("Test Witz 1", Language.GERMAN);
         Joke jokeGerman2 = new Joke("Test Witz 2", Language.GERMAN);
         Joke jokeEnglish1 = new Joke("Test Joke 1", Language.ENGLISH);

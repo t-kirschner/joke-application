@@ -1,9 +1,10 @@
 package com.sqs.jokeapplication;
 
-import java.io.IOException;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-// Logging occurring errors to logfile.log
+// logging occurring errors to logfile.log
 public class LoggingManager {
     private static final Logger logger = Logger.getLogger("Joke Application");
 

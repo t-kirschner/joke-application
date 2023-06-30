@@ -28,37 +28,37 @@ public class JokeDatabaseUnitTest {
 
     @Test
     public void testLoadJokesFromApi_Success() {
-        // Mock-Verhalten festlegen
+        // Set mock behavior
         Language language = Language.ENGLISH;
         String response = "Mocked api response";
 
         when(apiMock.getApiResponse(language)).thenReturn(response);
 
-        // Test durchführen
+        // Run test
         boolean result = jokeDatabase.loadJokesFromApi(language);
 
-        // Überprüfen
+        // Check
         assertTrue(result);
         verify(repositoryMock, times(1)).saveAll(anyList());
-        // Überprüfen, ob die Methode getApiResponse() 10 Mal aufgerufen wurde
+        // Check if the getApiResponse() method was called 10 times
         verify(apiMock, times(10)).getApiResponse(language);
     }
 
 
     @Test
     public void testLoadJokesFromApi_Failure() {
-        // Mock-Verhalten festlegen
+        // Set mock behavior
         Language language = Language.GERMAN;
 
         when(apiMock.getApiResponse(language)).thenReturn(null);
 
-        // Test durchführen
+        // Run test
         boolean result = jokeDatabase.loadJokesFromApi(language);
 
-        // Überprüfen
+        // Check
         assertFalse(result);
         verify(repositoryMock, never()).saveAll(anyList());
-        // Überprüfen, ob die Methode getApiResponse() aufgerufen wurde
+        // Verify that the getApiResponse() method was called
         verify(apiMock, times(1)).getApiResponse(language);
     }
 

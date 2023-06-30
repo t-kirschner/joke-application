@@ -25,17 +25,17 @@ public class JokeApiUnitTest {
 
     @Test
     public void testGetApiResponse() {
-        // Mock-Verhalten festlegen
+        // Set mock behavior
         String expectedResponse = "Mocked api response";
         Language language = Language.ENGLISH;
         String url = "https://v2.jokeapi.dev/joke/Programming?" + language.url + "format=txt";
 
         when(restTemplateMock.getForObject(url, String.class)).thenReturn(expectedResponse);
 
-        // Methode aufrufen
+        // Call method
         String actualResponse = jokeApi.getApiResponse(language);
 
-        // Überprüfen
+        // Check
         assertEquals(expectedResponse, actualResponse);
     }
 }

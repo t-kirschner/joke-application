@@ -9,6 +9,7 @@ class JokeUnitTest {
 
     @Test
     void getJoke() {
+        // checking if getting joke as asserted
         assertEquals("Test joke", joke.getJoke());
     }
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 @Table(name = "jokes")
 public class Joke {
 
+    // setting columns in database
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +27,7 @@ public class Joke {
         this.language = language.toString();
     }
 
+    // returns joke as String
     public String getJoke() {
         return joke;
     }
