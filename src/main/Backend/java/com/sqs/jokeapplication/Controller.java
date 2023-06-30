@@ -35,6 +35,7 @@ public class Controller {
         }
     }
 
+    // on get request
     @GetMapping
     public String getOnlineStatus() {
         return "Joke Application online!";
