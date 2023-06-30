@@ -53,6 +53,7 @@ Ziel ist es die Anwendung softwaretechnisch weitgreifend abzusichern. Dazu gehö
 - Maintainability
 - Usability
 - Security
+- Funktional Safety
 - Performance
 
 Die detaillierte Ausarbeitung und Umsetzung der Qualitätsziele werden in [Kapitel 10](#10-Qualität) ausgeführt.
@@ -118,7 +119,7 @@ Die Verwendung einer eingebetteten Datenbank wie H2 bietet mehrere Vorteile. Ein
 Die allgemeine Bausteinsicht kann den Diagrammen in [Kapitel 3](#3-kontextabgrenzung) entnommen werden. Da sich die Komplexität der Anwendung in Grenzen hält, wird hier nicht näher drauf eingegangen.
 
 
-# 6 Laufzeitsicht
+# 6 Laufzeitsicht (Runtime)
 Im Folgenden wird das Zusammenspiel der einzelnen Komponenten während der Laufzeit erläutert:
 
 1. Benutzer startet die Anwendung.
@@ -127,7 +128,7 @@ Im Folgenden wird das Zusammenspiel der einzelnen Komponenten während der Laufz
 4. Der Controller überprüft nun zunächst, ob von jeder Sprache noch genügend Witze in der Datenbank vorhanden sind. Ist dies der Fall, wird der erste Witz, der mit der vom User ausgewählten Sprache übereinstimmt aus der Datenbank geladen und an das Frontend zurückgegeben, wo er dann entsprechend angezeigt wird. Anschließend wird der Witz aus der Datenbank entfernt.
 5. Bemerkt der Controller beim Ausführen des eben genannten Schritts, dass sich von einer Sprache nur noch weniger als 5 Witze befinden, werden GET-Requests an die externe API gesendet, um die Datenbank wieder mit Witzen der entsprechenden Sprache zu befüllen.
 
-# 7 Verteilungssicht
+# 7 Verteilungssicht (Deployment)
 Die Anwendung nutzt einen Webserver für das Frontend und einen Applikationsserver für das Backend als Ausführungsumgebung. Die verwendete H2 Datenbank ist eine In-Memory-Datenbank und wird mit Ausführung des Applikationsservers gestartet.
 Für die Anwendung besteht die Möglichkeit, alle Komponenten sowie in einer dedizierten Virtualisierungsumgebung (On-Premise) als auch containerisiert in der Cloud bereitzustellen.
 
@@ -145,20 +146,20 @@ Das Cachen von Witzen in der integrierten Datenbank ermöglicht es beim Ausfall 
 ## Sicherheitskonzepte
 Die Anwendung wurde über alle Komponenten hinweg verschiedensten Tests unterzogen. Diese werden in [Kapitel 11](#11-qualittssichernde-manahmen-und-testmanagement) detailliert erläutert.
 
-##Architektur- und Entwurfsmuster:
+## Architektur- und Entwurfsmuster:
 Die Anwendung verwendet das Model-View-Controller Modell, um eine klare Trennung von Verantwortlichkeiten und eine modulare Struktur zu erreichen. Das Frontend (Vue 3) und das Backend (Java 17) sind voneinander unabhängig und kommunizieren über definierte Schnittstellen. Das gilt ebenso für die externe API und die angebundene Datenbank. Dies ermöglicht eine leichtere Wartung, Erweiterbarkeit und Testbarkeit der Anwendung.
 
-##Under-The-Hood:
+## Under-The-Hood:
 Aufgrund des modularen Aufbaus ist eine Skalierung der Anwendung jederzeit möglich. Zudem wurden die einzelnen Services und Klassen so geschrieben, dass die Anwendung leicht erweitert werden kann, wie beispielsweise das Hinzufügen weiterer Sprachen oder Themengebiete.
 
 Ein integrierter Logger dokumentiert detailliert in einem entsprechenden logging-file, falls Probleme mit der externen API oder der Datenbank auftreten. Hierdurch kann stets nachgeprüft werden, was der Grund für einen eventuellen Ausfall der Anwendung war.
 
-##Entwicklungskonzepte:
+## Entwicklungskonzepte:
 Bei der Entwicklung der Anwendung wurden bewährte Softwareentwicklungsmethoden wie die Verwendung von Versionskontrolle (GitHub), automatisierte Tests, Continuous Integration und Continuous Deployment (CI/CD) angewendet. Dadurch wird eine hohe Codequalität, Fehlererkennung und eine effiziente Bereitstellung der Anwendung sichergestellt.
 
 
 # 9 Architekturentscheidungen
-Dokumentation der wichtigsten Architekturentscheidungen nach den Architecture desicion records (ADR):
+Dokumentation der wichtigsten Architekturentscheidungen nach den architecture desicion records (ADR):
 
 |    |Beschreibung|
 |---        |---         |
@@ -179,169 +180,91 @@ Dokumentation der wichtigsten Architekturentscheidungen nach den Architecture de
 
 |    |Beschreibung|
 |---        |---         |
-|Titel   |Frontend Server   |
+|Titel   |Internetkommunikation   |
 |Status   |Akzeptiert  |
-|Kontext   |Bewährte Technologie nötig, die das gewählte Frontend-Framework Vue.js unterstützt    |
-|Entscheidung   |Vite |
-|Konsequenzen   |Schnelle Entwicklung durch Hot-Module-Replacement-Funktion sowie einfache Konfiguration. Die Entscheidung bringt jedoch auch mit sich, dass ältere Browser lediglich limitiert unterstützt werden und es nur eine kleine Community im Vergleich zu etablierteren Frontend-Servern gibt.|
+|Kontext   |Weitläufig verbreitete und unterstützte Technologie für die Kommunikation über das Netz notwendig, um funktionale Sicherheit garantieren zu können.    |
+|Entscheidung   |REST |
+|Konsequenzen   |Eines der am weitesten verbreiteten Kommunikationsschnittstellen und somit von vielen Entwicklern beherrscht. Benutzt einfache und standardisierte Prinzipien wie HTTP und verwendet verbreitete Dateiformate wie JSON, was die Integration in verschiedene Komponenten erleichtert. Dennoch ist REST relativ unflexibel, da es lediglich auf das Lesen, Aktualisieren, Erstellen und Löschen von Ressourcen beschränkt ist. Für den Umfang dieser Anwendung jedoch völlig ausreichend.|
+
+|    |Beschreibung|
+|---        |---         |
+|Titel   |Art der Datenbank   |
+|Status   |Akzeptiert  |
+|Kontext   |Wahl zwischen SQL- und NoSQL-basiertem Datenbanktyp. Datenbank wird lediglich als temporärer Zwischenspeicher von Strings benutzt und muss keine großen Datenmengen über längere Zeit verwalten.  |
+|Entscheidung   |SQL-basierte DB |
+|Konsequenzen   |SQL ist eine umfangreiche und leistungsstarke Datenbanksprache, welche es erlaubt die Daten effizient abzurufen. Durch robuste Mechanismen zur Datenkonsistenz und Integrität können die Witze korrekt und wie gewünscht abgerufen und gespeichert werden. SQL-Datenbanken können in Bezug auf horizontale Skalierbarkeit und das Handhaben großer Datenmengen möglicherweise nicht so flexibel sein. Da die hier entwickelte Anwendung in dieser Ausführung jedoch nur sehr geringe Datenmengen verarbeitet ist dieses Problem als unkritisch zu betrachten. |
 
 # 10 Qualität
+Im Folgenden werden die wichtigsten Qualitätsmerkmale erläutert, die bei der Entwicklung der Anwendung stets berücksichtigt wurden:
 
-::: formalpara-title
-**Inhalt**
-:::
+- **Funktionalität:** Die Software erfüllt alle funktionalen Anforderungen und bietet die erwarteten Funktionen und Dienste. >> Sichergestellt durch Integrations- und Unittests.
 
-Dieser Abschnitt enthält möglichst alle Qualitätsanforderungen als
-Qualitätsbaum mit Szenarien. Die wichtigsten davon haben Sie bereits in
-Abschnitt 1.2 (Qualitätsziele) hervorgehoben.
+- **Zuverlässigkeit:** Die Software ist stabil, robust und zuverlässig. Sie erfüllt die festgelegten Anforderungen und führt ihre Aufgaben fehlerfrei aus. >> Last- und End-to-End Tests.
 
-Nehmen Sie hier auch Qualitätsanforderungen geringerer Priorität auf,
-deren Nichteinhaltung oder -erreichung geringe Risiken birgt.
+- **Benutzbarkeit:** Die Software ist benutzerfreundlich und leicht verständlich. Sie bietet eine intuitive Benutzeroberfläche und ermöglicht eine effiziente Interaktion mit den Benutzern. >> Sichergestellt durch intuitives GUI-Layout.
 
-::: formalpara-title
-**Motivation**
-:::
+- **Wartbarkeit:** Die Software ist gut strukturiert, modular aufgebaut und leicht wartbar. Änderungen und Erweiterungen können einfach implementiert werden, ohne die Stabilität des Systems zu beeinträchtigen. Ein implementierter Logger erleichtert Fehleranalysen. Statische Codeanalyse durch Sonarcloud und Linter-Verfahren garantieren die Einhaltung von Code-Konventionen.
 
-Weil Qualitätsanforderungen die Architekturentscheidungen oft maßgeblich
-beeinflussen, sollten Sie die für Ihre Stakeholder relevanten
-Qualitätsanforderungen kennen, möglichst konkret und operationalisiert.
+- **Sicherheit:** Benutzeroberfläche so gestaltet, dass fehlerhafte Eingaben nicht möglich sind. Stetige Codeanalyse und automatisierte Testdurchläufe durch GitHub CI-Pipeline. >> Anwendung wird regelmäßig auf Sicherheitslücken und veraltete Dependencies überprüft.
 
-::: formalpara-title
-**Weiterführende Informationen**
-:::
+- **Anpassbarkeit:** Die Software kann an spezifische Anforderungen und Konfigurationen angepasst werden. Die verwendeten Klassen und Komponenten sind so strukturiert, dass eine flexible Konfiguration auch im Nachhinein gewährleistet werden kann.
 
-Siehe [Qualitätsanforderungen](https://docs.arc42.org/section-10/) in
-der online-Dokumentation (auf Englisch!).
+- **Testbarkeit:** Die Software ist gut testbar und ermöglicht eine effektive Durchführung von automatisierten Tests. Sie unterstützt Testaktivitäten, um die Qualität und Funktionalität der Software regelmäßig zu überprüfen. >> CI-Pipeline.
 
-## Qualitätsbaum {#_qualit_tsbaum}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Der Qualitätsbaum (à la ATAM) mit Qualitätsszenarien an den Blättern.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Die mit Prioritäten versehene Baumstruktur gibt Überblick über
-die --- oftmals zahlreichen --- Qualitätsanforderungen.
-
--   Baumartige Verfeinerung des Begriffes „Qualität", mit „Qualität"
-    oder „Nützlichkeit" als Wurzel.
-
--   Mindmap mit Qualitätsoberbegriffen als Hauptzweige
-
-In jedem Fall sollten Sie hier Verweise auf die Qualitätsszenarien des
-folgenden Abschnittes aufnehmen.
-
-## Qualitätsszenarien {#_qualit_tsszenarien}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Konkretisierung der (in der Praxis oftmals vagen oder impliziten)
-Qualitätsanforderungen durch (Qualitäts-)Szenarien.
-
-Diese Szenarien beschreiben, was beim Eintreffen eines Stimulus auf ein
-System in bestimmten Situationen geschieht.
-
-Wesentlich sind zwei Arten von Szenarien:
-
--   Nutzungsszenarien (auch bekannt als Anwendungs- oder
-    Anwendungsfallszenarien) beschreiben, wie das System zur Laufzeit
-    auf einen bestimmten Auslöser reagieren soll. Hierunter fallen auch
-    Szenarien zur Beschreibung von Effizienz oder Performance. Beispiel:
-    Das System beantwortet eine Benutzeranfrage innerhalb einer Sekunde.
-
--   Änderungsszenarien beschreiben eine Modifikation des Systems oder
-    seiner unmittelbaren Umgebung. Beispiel: Eine zusätzliche
-    Funktionalität wird implementiert oder die Anforderung an ein
-    Qualitätsmerkmal ändert sich.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Szenarien operationalisieren Qualitätsanforderungen und machen deren
-Erfüllung mess- oder entscheidbar.
-
-Insbesondere wenn Sie die Qualität Ihrer Architektur mit Methoden wie
-ATAM überprüfen wollen, bedürfen die in Abschnitt 1.2 genannten
-Qualitätsziele einer weiteren Präzisierung bis auf die Ebene von
-diskutierbaren und nachprüfbaren Szenarien.
-
-::: formalpara-title
-**Form**
-:::
-
-Entweder tabellarisch oder als Freitext.
+- **Performanz:** Die Software kann bei Bedarf problemlos skaliert werden, um wachsenden Anforderungen und steigenden Benutzerzahlen gerecht zu werden. >> Überprüft durch Last- und Stresstests.
 
 # 11 Qualitätssichernde Maßnahmen und Testmanagement
+Um die im vorangegangen Qualitätsmerkmale garantieren zu können wurden entsprechende Tests integriert. Diese können lokal ausgeführt werden, sind jedoch ebenso automatisiert in die GitHub CI-Pipeline integriert. Die entsprechenden Workflows können in dem Ordner `.github\workflows` eingesehen werden.
 
-::: formalpara-title
-**Inhalt**
-:::
+## Unittests Backend
+- **Frameworks:** JUnit, Mockito
+- **Ordner:** `src/test/java/com/sqs/jokeapplication`
+- **Vorgehen:** Überprüfung aller relevanten Methoden auf korrekte Funktionalität. Hierbei wurden Komponenten Dritter (z.B. externe API, Datenbank etc.) gemockt, um die Tests unabhängig ausführen zu können
 
-Eine nach Prioritäten geordnete Liste der erkannten Architekturrisiken
-und/oder technischen Schulden.
+## Integrationtests
+- **Framework:** JUnit
+- **Ordner:** `src/test/java/com/sqs/jokeapplication`
+- **Vorgehen:** Überprüfung des korrekten Zusammenspiels zwischen den einzelnen Komponenten. Datenbankoperationen, API-Requests
 
-> Risikomanagement ist Projektmanagement für Erwachsene.
->
-> ---  Tim Lister Atlantic Systems Guild
+## Unittests Frontend
+- **Framework:** Vitest
+- **Testfile:** `src/main/Frontend/joke-application-vue-frontend/src/UserInterfaceUnit.test.js`
+- **Vorgehen:** Überprüfung der Benutzereingabe
 
-Unter diesem Motto sollten Sie Architekturrisiken und/oder technische
-Schulden gezielt ermitteln, bewerten und Ihren Management-Stakeholdern
-(z.B. Projektleitung, Product-Owner) transparent machen.
+## Statische Codeanalyse
+- **Tool:** Sonarcloud, GitHub super-linter
+- **Testskript:** `.github\workflows\build-and-test.yml`
+- **Vorgehen:** Mit dem GitHub super-linter wird der Code bei jedem Push- oder Pullrequest auf allgemeine Code-Konventionen überprüft. Zudem wird in der CI-Pipeline eine Verbindung zu Sonarcloud hergestellt, um automatisch eine statische Codeanalyse zu triggern. Die Ergebnisse können auf [Sonarcloud](https://sonarcloud.io/project/overview?id=t-kirschner_joke-application) eingesehen werden. Zudem sind die wichtigsten Informationen in den Sonarcloud-Badges am Anfang dieser Datei eingebettet.
 
-::: formalpara-title
-**Form**
-:::
+## Securitytests
+- **Tools:** OWASP Dependency Check, Dependa-bot
+- **Testskript:** `.github\workflows\dependency-check.yml`
+- **Vorgehen:** Der OWASP Dependency Check wurde in einen von den restlichen Tests separierten Workflow eingebettet. Dieser wird nicht nur bei Push- oder Pullrequests, sondern auch wöchentlich automatisch ausgeführt. Hierdurch wird sichergestellt, dass auch nach längerem Stillstand des Repositorys (z.B. Entwicklungspause) trotzdem noch regelmäßig nach Sicherheitslücken in den Dependencies gesucht wird. Der erstellte Bericht kann nach Beendigung eines Tests im GitHub unter dem entsprechenden Workflow-Run unter *Artifacts* eingesehen werden. Zusätzlich wurde der Dependa-bot auf GitHub aktiviert, um stets Benachrichtigungen über veraltete Dependencies zu erhalten.
 
-Liste oder Tabelle von Risiken und/oder technischen Schulden, eventuell
-mit vorgeschlagenen Maßnahmen zur Risikovermeidung, Risikominimierung
-oder dem Abbau der technischen Schulden.
+## Lasttests
+- **Framework:** k6
+- **Ordner:** `src/test/performance`
+- **Vorgehen:**
+    - *Load-Test:* Überprüfung des Systemverhaltens unter regulärer Last. (ca. 50 User innerhalb von 5 Minuten)
+    - *Stress-Test:* Überprüfung des Systemverhaltens unter extremer Belastung. (ca. 1000 User innerhalb von 15 Minuten)
+    - Auch diese Tests wurden in die CI-Pipeline in `.github\workflows\build-and-test.yml` integriert und automatisiert.
 
-Siehe [Risiken und technische
-Schulden](https://docs.arc42.org/section-11/) in der
-online-Dokumentation (auf Englisch!).
+## End-to-End Tests
+- **Framework:** Cypress
+- **Testfile:** `src/main/Frontend/joke-application-vue-frontend/cypress/e2e/application_page.cy.js`
+- **Vorgehen:** Um die Anwendung abschließend in ihrer Ganzheit auf ihre Funktionalität abzutesten, wurde ein End-to-End Test geschrieben und ebenfalls in die CI-Pipeline integriert. Hierfür wird die komplette Anwendung (Backend, Frontend, Datenbank) gestartet und die Weboberfläche über Cypress aufgerufen. Anschließend werden alle möglichen Eingabeoptionen des Dropdown-Menüs sowie das Klicken auf den Button simuliert. Dabei wird die laufende Anwendung mit den zugehörigen HTTP-Requests, logischen Abläufen, Datenbankoperationen und GUI-Verhalten im Gesamten abgetestet. Die Ergebnisse können nach der Ausführung (z.B. in der CI-Pipeline) in der Konsolenausgabe eingesehen werden.
 
-# Glossar {#section-glossary}
+## Fehlerbehandlung und Logging
+Allgemein wurde darauf geachtet, dass jegliche Art von potenziell auftretenden Fehlern (z.B. Internetausfall, Datenbank down, externe API down, etc.) mit entsprechender Fehlerbehandlung abgefangen werden. Sollten Fehler auftreten, die dazu führen, dass dem User keine Witze mehr angezeigt werden, so wird ihm eine entsprechende Nachricht angezeigt mit Informationen zur aktuellen Unfunktionalität der Anwendung oder mit Tipps zur Fehlerbehebung (z.B. Internetverbindung überprüfen).
 
-::: formalpara-title
-**Inhalt**
-:::
+Zur sauberen Dokumentation wurde ein Logger implementiert, welcher den Trace von aufgetretenen Fehlern in einer logfile abspeichert. Sollte noch kein logfile bestehen wird dies automatisch beim Auftreten eines Fehlers erstellt. Dies kann im Root-Verzeichnis unter `logfile.log` eingesehen werden.
 
-Die wesentlichen fachlichen und technischen Begriffe, die Stakeholder im
-Zusammenhang mit dem System verwenden.
 
-Nutzen Sie das Glossar ebenfalls als Übersetzungsreferenz, falls Sie in
-mehrsprachigen Teams arbeiten.
+# 11 Risiken
+Abschließend werden zu berücksichtigende potenzielle Risiken aufgeführt:
 
-::: formalpara-title
-**Motivation**
-:::
+- **Abhängigkeit von externer API:** Da die Anwendung von einer externen REST-API abhängig ist, besteht das Risiko von Ausfallzeiten oder Änderungen an der API, die sich auf die Funktionalität der Anwendung auswirken können. Es ist wichtig, diese Abhängigkeit zu überwachen und mögliche Auswirkungen zu bewerten.
 
-Sie sollten relevante Begriffe klar definieren, so dass alle Beteiligten
+- **Skalierbarkeit:** Da eine In-Memory-Datenbank Datenbank verwendet wird, könnte es bei zunehmender Datenmengen oder erhöhten Zugriffszahlen zu Performance- oder Stabilitätsproblemen kommen. Es ist wichtig, die Datenbankleistung zu überwachen und mögliche Engpässe oder Bottlenecks zu identifizieren.
 
--   diese Begriffe identisch verstehen, und
-
--   vermeiden, mehrere Begriffe für die gleiche Sache zu haben.
-
-Zweispaltige Tabelle mit \<Begriff> und \<Definition>.
-
-Eventuell weitere Spalten mit Übersetzungen, falls notwendig.
-
-Siehe [Glossar](https://docs.arc42.org/section-12/) in der
-online-Dokumentation (auf Englisch!).
-
-+-----------------------+-----------------------------------------------+
-| Begriff               | Definition                                    |
-+=======================+===============================================+
-| *\<Begriff-1>*        | *\<Definition-1>*                             |
-+-----------------------+-----------------------------------------------+
-| *\<Begriff-2*         | *\<Definition-2>*                             |
-+-----------------------+-----------------------------------------------+
-
+- **Security-Hotspot:** Sonarcloud hat die Implementierung des Logging Managers als kritisch angesehen, da anwendungsinterne Fehlermeldungen in einer "ungeschützten" Datei abgelegt werden. Da die Anwendung im aktuellen Entwicklungsstand jedoch keine sensiblen Daten loggt, wurde die Warnung als unproblematisch eingestuft. Sollte sich dies in Zukunft (z.B. bei entsprechender Weiterentwicklung der Anwendung) ändern, dann sollte eine Verschlüsselung des Logging-Prozesses in Erwägung gezogen werden.
