@@ -18,12 +18,12 @@
 
 Starte Backend (Java 17, Springboot 3):
 - Build with Maven
-- Maven Goal: .\mvn spring-boot:run
+- Maven command: .\mvn spring-boot:run
 - Erreichbar unter: http://localhost:8080/
 
 Starte Frontend (Vue 3):
 - Laufzeitumgebung Node.js
-- Node Goal: .\npm run dev
+- Node command: .\npm run dev
 - Erreichbar unter: http://localhost:5173/
 
 Datenbank (H2):
@@ -38,11 +38,12 @@ Datenbank (H2):
 Die Joke Application bietet ein einfaches Userinterface zur Anzeige von Programmierer-Witzen. Beim Starten der Anwendung werden 10 Witze für jede einstellbare Sprache von einer öffentlichen [JokeApi](https://v2.jokeapi.dev/) geladen und in einer SQL-Datenbank abgespeichert. Durch ein Dropdown-Menü kann die bevorzugte Sprache des Witzes eingestellt werden. Mit klicken auf den "Submit"-Button wird ein Witz in der eingestellten Sprache aus der Datenbank geladen und dem User angezeigt. Erreicht die Datenbank ein kritisches Minimum an Objekten, werden neue Witze von der JokeApi nachgeladen. Hierdurch soll sichergestellt werden, dass dem User stets ein Mindestmaß an Witzen zur Verfügung steht, sollte zeitweise keine Verbindung zur JokeApi möglich sein.
 
 ## Aufgabenstellung
-Die wesentliche Aufgabenstellung umfasst das Entwickeln und Absichern einer simplen Webanwendung mit rudimentären Interaktionsmöglichkeiten für den User. Die funktionalen Anforderungen hierbei sind:
+Die wesentliche Aufgabenstellung umfasst das Entwickeln und Absichern einer simplen Webanwendung mit rudimentären Interaktionsmöglichkeiten für den User. Die Anforderungen hierbei sind:
 - Webbasierte Benutzeroberfläche mit Möglichkeit zur Interaktion
 - Rest Api Schnittstelle zur Kommunikation mit dem Backend
 - Anbindung einer 3rd-Party Api zum Laden von Daten aus dem Netz
 - Integration einer Datenbank zur Speicherung von Daten
+- Einhaltung von Softwarequalitätskriterien sowie softwaretechnische Absicherung
 
 
 
@@ -130,7 +131,7 @@ Im Folgenden wird das Zusammenspiel der einzelnen Komponenten während der Laufz
 
 # 7 Verteilungssicht (Deployment)
 Die Anwendung nutzt einen Webserver für das Frontend und einen Applikationsserver für das Backend als Ausführungsumgebung. Die verwendete H2 Datenbank ist eine In-Memory-Datenbank und wird mit Ausführung des Applikationsservers gestartet.
-Für die Anwendung besteht die Möglichkeit, alle Komponenten sowie in einer dedizierten Virtualisierungsumgebung (On-Premise) als auch containerisiert in der Cloud bereitzustellen.
+Für die Anwendung besteht die Möglichkeit, alle Komponenten in einer dedizierten Virtualisierungsumgebung (On-Premise) als auch containerisiert in der Cloud bereitzustellen.
 
 Während der Entwicklungs- und Testphase wurde die Anwendung lokal deployt und ausgeführt. Bei größeren und komplexeren Anwendungen ist es üblich, verschiedene Umgebungen wie Development, Test, Staging und Production einzurichten. Im Rahmen dieses Projekts wurde aufgrund der geringen Komplexität der Anwendung auf eine solche Unterteilung verzichtet.
 
@@ -147,7 +148,7 @@ Das Cachen von Witzen in der integrierten Datenbank ermöglicht es beim Ausfall 
 Die Anwendung wurde über alle Komponenten hinweg verschiedensten Tests unterzogen. Diese werden in [Kapitel 11](#11-qualittssichernde-manahmen-und-testmanagement) detailliert erläutert.
 
 ## Architektur- und Entwurfsmuster:
-Die Anwendung verwendet das Model-View-Controller Modell, um eine klare Trennung von Verantwortlichkeiten und eine modulare Struktur zu erreichen. Das Frontend (Vue 3) und das Backend (Java 17) sind voneinander unabhängig und kommunizieren über definierte Schnittstellen. Das gilt ebenso für die externe API und die angebundene Datenbank. Dies ermöglicht eine leichtere Wartung, Erweiterbarkeit und Testbarkeit der Anwendung.
+Die Micro-Service-Anwendung verwendet das Model-View-Controller Modell, um eine klare Trennung von Verantwortlichkeiten und eine modulare Struktur zu erreichen. Das Frontend (Vue 3) und das Backend (Java 17) sind voneinander unabhängig und kommunizieren über definierte Schnittstellen. Das gilt ebenso für die externe API und die angebundene Datenbank. Dies ermöglicht eine leichtere Wartung, Erweiterbarkeit und Testbarkeit der Anwendung.
 
 ## Under-The-Hood:
 Aufgrund des modularen Aufbaus ist eine Skalierung der Anwendung jederzeit möglich. Zudem wurden die einzelnen Services und Klassen so geschrieben, dass die Anwendung leicht erweitert werden kann, wie beispielsweise das Hinzufügen weiterer Sprachen oder Themengebiete.
