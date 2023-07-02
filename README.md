@@ -145,7 +145,7 @@ Das Frontend wurde entworfen, um eine benutzerfreundliche Oberfläche mit einem 
 Das Cachen von Witzen in der integrierten Datenbank ermöglicht es beim Ausfall der externen API dennoch einen gewissen Vorrat an Ergebnissen anzeigen zu können. Hierdurch soll eine möglichst positive User Experience an den Anwender herangetragen werden.
 
 ## Sicherheitskonzepte
-Die Anwendung wurde über alle Komponenten hinweg verschiedensten Tests unterzogen. Diese werden in [Kapitel 11](#11-qualittssichernde-manahmen-und-testmanagement) detailliert erläutert.
+Die Anwendung wurde über alle Komponenten hinweg verschiedensten Tests unterzogen. Diese werden in [Kapitel 11](#11-qualitätssichernde-manahmen-und-testmanagement) detailliert erläutert.
 
 ## Architektur- und Entwurfsmuster:
 Die Micro-Service-Anwendung verwendet das Model-View-Controller Modell, um eine klare Trennung von Verantwortlichkeiten und eine modulare Struktur zu erreichen. Das Frontend (Vue 3) und das Backend (Java 17) sind voneinander unabhängig und kommunizieren über definierte Schnittstellen. Das gilt ebenso für die externe API und die angebundene Datenbank. Dies ermöglicht eine leichtere Wartung, Erweiterbarkeit und Testbarkeit der Anwendung.
